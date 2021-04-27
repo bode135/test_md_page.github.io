@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>nginx+gunicorn部署 - mds</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "nginx+gunicorn\u90e8\u7f72";
+    var mkdocs_page_input_path = "nginx+gunicorn\u90e8\u7f72.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> mds</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="tocbase current">
+    
+    
+      
+
+
+  <li class="navtree toctree-l1 inactive">
+    <a class="" href="..">简介</a>
+  </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">Mkdocs 快速入门</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../source/222/">安装 MkDocs</a>
+  </li>
+        
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="../source/333/">创建项目</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+      
+  <li class="navtree toctree-l1 label">
+    <p class="caption">MkDocs 进阶操作</p>
+  </li>
+
+
+  
+
+  
+    <li class="navtree toctree-l1 group">
+      <ul class="navtree subnav-l1 current">
+          
+
+
+  <li class="navtree toctree-l2 inactive">
+    <a class="" href="https://www.baidu.com/">有疑问?点我!</a>
+  </li>
+        
+      </ul>
+    </li>
+    
+  </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">mds</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>nginx+gunicorn部署</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="nginxgunicorn">nginx+gunicorn部署</h1>
+<h2 id="_1">运行前端</h2>
+<ul>
+<li>使用<code>live-server</code>来运行<code>index.html</code></li>
+</ul>
+<pre><code class="language-shell">live-server --port=3344
+</code></pre>
+<h2 id="_2">部署后端</h2>
+<p><a href="https://www.dusaiphoto.com/article/71/"><code>Django部署参考资料</code></a></p>
+<ul>
+<li>
+<p>[x] DRF项目精简</p>
+</li>
+<li>
+<p>[x] 将DRF项目上传至gitee</p>
+</li>
+<li>
+<p>[x] 连接阿里云服务器</p>
+</li>
+<li>
+<p>[x] 服务器上下载django</p>
+</li>
+<li>
+<p>[ ] 使用wsgi本地运行django项目</p>
+</li>
+</ul>
+<blockquote>
+<p>不需要本地运行</p>
+</blockquote>
+<ul>
+<li>
+<p>[x] 配置nginx文件</p>
+</li>
+<li>
+<p>[x] 部署DRF项目</p>
+</li>
+</ul>
+<h3 id="_3">后端虚拟环境地址</h3>
+<pre><code>/Users/mac/.virtualenvs/PycharmProjects/uni_test/bin/python
+</code></pre>
+<ul>
+<li>激活虚拟环境</li>
+</ul>
+<pre><code>source /Users/mac/.virtualenvs/PycharmProjects/uni_test/bin/activate
+deactivate
+</code></pre>
+<ul>
+<li>仓库地址</li>
+</ul>
+<pre><code>https://gitee.com/bode135/hello_uni.git
+
+git remote -v   # 输出当前连接的git仓库
+</code></pre>
+<ul>
+<li>创建虚拟环境</li>
+</ul>
+<pre><code>python3 -m venv env   # 创建虚拟环境, linux版本: virtualenv env
+pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/ # 镜像源
+
+source env/bin/activate     # 激活虚拟环境, win版本: env\Scripts\activate.bat
+
+pip install --upgrade pip       # 更新pip
+pip install -r requirements.txt # 安装pip依赖项
+
+# 创建.gitignore, 并写入忽略项
+...
+# 运行 shells/commit_and_push.sh. 可在命令后带文本备注.
+sh shells/commit_and_push.sh &quot;这是测试使用sh脚本提交. 测   试*^  &amp;*.&quot;
+</code></pre>
+<h2 id="_4">云服务器</h2>
+<ul>
+<li>连接服务器</li>
+</ul>
+<pre><code>sudo -i
+# input password
+ssh root@47.97.159.133
+</code></pre>
+<ul>
+<li>测试环境</li>
+</ul>
+<pre><code>mkdir uniapps
+cd uniapps/
+
+git clone https://gitee.com/bode135/hello_uni.git
+cd hello_uni/
+
+# 查看文件和python版本信息
+ls
+python -V
+python3 -V
+
+# 创建虚拟环境
+virtualenv env
+ls
+
+# 运行虚拟环境, 并运行服务器
+# 法1
+source env/bin/activate     // deactivate # 退出虚拟环境
+# sh shells/run.sh // 运行服务的脚本
+python manage.py runserver 8001
+
+
+# 法2
+source venv.sh
+
+sh shells/run.sh
+
+# 软连接
+sudo ln -sf /etc/nginx/sites-available/bode.vip /etc/nginx/sites-enabled
+</code></pre>
+<ul>
+<li>nginx运行项目</li>
+</ul>
+<pre><code># 暂停正在运行的项目
+# sudo service nginx stop
+sudo service nginx start
+sudo service nginx reload
+
+
+
+# 创建新的nginx配置文件
+cd /etc/nginx/sites-available
+sudo vi hello_uni.vip
+</code></pre>
+<ul>
+<li>全局配置</li>
+</ul>
+<pre><code># IP
+47.97.159.133
+
+
+# nginx配置文件地址
+cd /etc/nginx/sites-available
+sudo vi hello_uni.vip
+
+mkdir -p /home/sites/uniapps/
+mkdir -p /home/sites/uniapps/hello_uni      # 创建路径
+
+# 项目地址
+# 旧的: cd ~/uniapps/hello_uni
+cd /home/sites/uniapps/hello_uni
+
+# 杀掉指定端口
+lsof -i tcp:8000
+kill -9 6540
+</code></pre>
+<ul>
+<li>nginx配置</li>
+</ul>
+<pre><code>server {
+  charset utf-8;
+  listen 443;
+  server_name 47.97.159.133;  # 改成你的 IP
+
+  location /static {
+    alias /home/sites/uniapps/hello_uni/static;
+  }
+
+  location /media {
+    alias /home/sites/uniapps/hello_uni/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://unix:/tmp/47.97.159.133.socket;  # 改成你的 IP
+  }
+}
+
+server {
+  charset utf-8;
+  listen 3389;
+  server_name 47.97.159.133;  # 改成你的 IP
+
+  location /static {
+    alias /home/sites/uniapps/hello_uni/static;
+  }
+
+  location /media {
+    alias /home/sites/uniapps/hello_uni/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://unix:/tmp/47.97.159.133.socket;  # 改成你的 IP
+  }
+}
+
+
+
+# --------------------------------------
+# (env) ../sites-available$ 
+sudo ln -s /etc/nginx/sites-available/hello_uni.vip /etc/nginx/sites-enabled
+
+# gunicorn
+pip3 install gunicorn
+cd /home/sites/uniapps/hello_uni/uni_test/
+sudo service nginx reload
+gunicorn --bind unix:/tmp/47.97.159.133.socket uni_test.wsgi:application
+
+</code></pre>
+<ul>
+<li>启动服务</li>
+</ul>
+<pre><code># 软连接
+sudo ln -sf /etc/nginx/sites-available/bode.vip /etc/nginx/sites-enabled
+
+cd /home/sites/
+
+# nginx配置文件地址
+# sudo vim /etc/nginx/sites-available/hello_uni.vip
+
+cd /etc/nginx/sites-available
+sudo vi hello_uni.vip
+
+# gunicorn
+# pip3 install gunicorn
+cd /home/sites/uniapps/hello_uni/
+# source env/bin/activate
+sudo service nginx reload
+gunicorn --bind 127.0.0.1:8000 uni_test.wsgi:application&amp;
+
+// gunicorn --bind unix:/tmp/47.97.159.133.socket uni_test.wsgi:application
+
+
+gunicorn --bind 127.0.0.1:8000 uni_test.wsgi:application&amp;
+
+
+gunicorn uni_test.wsgi:application -b 127.0.0.1:8022&amp;
+
+# my_blog
+cd /home/sites/bode.vip
+source env/bin/activate
+// gunicorn --bind unix:/tmp/47.97.159.133.socket my_blog.wsgi:application
+gunicorn -w 3 -b 127.0.0.1:8080 my_blog.wsgi:application
+
+</code></pre>
+<ul>
+<li>my_blog</li>
+</ul>
+<pre><code>server {
+  charset utf-8;
+  server_name  47.97.159.133;
+  listen 80;
+
+  location /static {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/collected_static;
+  }
+
+  location /media {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://unix:/tmp/47.97.159.133.socket;  # 改成你的 IP
+  }
+}
+
+
+server {
+  listen 80;
+  listen 443;
+  charset utf-8;
+  server_name 127.0.0.1;
+  server_name  47.97.159.133;
+
+  location /static {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/collected_static;
+  }
+
+  location /media {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://127.0.0.1:8080;
+  }
+}
+
+</code></pre>
+<h2 id="nginxgunicorn_1">nginx+gunicorn部署</h2>
+<blockquote>
+<p>同一个服务器部署多个Django项目</p>
+</blockquote>
+<ul>
+<li>nginx配置</li>
+</ul>
+<pre><code># uni后端
+server {
+  charset utf-8;
+  listen 3389;
+  server_name 47.97.159.133;  # 改成你的 IP
+
+  location /static {
+    alias /home/sites/uniapps/hello_uni/static;
+  }
+
+  location /media {
+    alias /home/sites/uniapps/hello_uni/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://127.0.0.1:8000
+  }
+}
+
+# 博客
+server {
+  listen 80;
+  listen 443;
+  charset utf-8;
+  server_name 127.0.0.1;
+  server_name  47.97.159.133;
+
+  location /static {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/collected_static;
+  }
+
+  location /media {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://127.0.0.1:8080;
+  }
+}
+
+</code></pre>
+<ul>
+<li>运行server</li>
+</ul>
+<pre><code># 软连接
+sudo ln -sf /etc/nginx/sites-available/bode.vip /etc/nginx/sites-enabled
+
+cd /home/sites/
+
+# nginx配置文件地址
+# sudo vim /etc/nginx/sites-available/hello_uni.vip
+
+cd /etc/nginx/sites-available
+sudo vi hello_uni.vip
+
+# gunicorn
+# pip3 install gunicorn
+cd /home/sites/uniapps/hello_uni/
+# source env/bin/activate
+sudo service nginx reload
+
+
+gunicorn --bind 127.0.0.1:8000 uni_test.wsgi:application
+gunicorn -w 3 -b 127.0.0.1:8080 my_blog.wsgi:application
+</code></pre>
+<h2 id="_5">前端部署</h2>
+<ul>
+<li>h5</li>
+</ul>
+<pre><code># 首页
+server {
+  listen 80;
+  charset utf-8;
+  server_name 127.0.0.1;
+  server_name  47.97.159.133;
+
+   location / {
+       root   /etc/nginx/sites-available;
+       index  index.html index.htm;
+   }
+}
+</code></pre>
+<h3 id="_6">汇总代码</h3>
+<pre><code class="language-shell"># 首页: uni前端, /mds: markdown文档
+server {
+  listen 80;
+  charset utf-8;
+  server_name 127.0.0.1;
+  server_name  47.97.159.133;
+
+  # uni-app's client
+  location / {
+    root   /etc/nginx/sites-available;
+    index  index.html index.htm;
+  }
+
+  # markdown documents
+  location  /mds {
+    alias  /etc/nginx/sites-available/mds/test_md_page.github.io;
+    index  index.html index.htm;
+    proxy_pass   http://localhost:7080;
+  }
+}
+
+
+
+# uni后端
+server {
+  charset utf-8;
+  listen 3389;
+  server_name 47.97.159.133;  # 改成你的 IP
+
+  location /static {
+    alias /home/sites/uniapps/hello_uni/static;
+  }
+
+  location /media {
+    alias /home/sites/uniapps/hello_uni/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://127.0.0.1:8000;
+  }
+}
+
+# my blog
+server {
+  # listen 80;
+  listen 443;
+  charset utf-8;
+  server_name 127.0.0.1;
+  server_name  47.97.159.133;
+
+  location /static {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/collected_static;
+  }
+
+  location /media {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://127.0.0.1:8080;
+  }
+}
+</code></pre>
+<ul>
+<li>博客暂时不用</li>
+</ul>
+<pre><code class="language-shell"># ------------ 暂时不用
+# my blog
+server {
+  listen 80;
+  listen 443;
+  charset utf-8;
+  server_name 127.0.0.1;
+  server_name  47.97.159.133;
+
+  location /static {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/collected_static;
+  }
+
+  location /media {
+    alias /home/sites/bodexiong.vip/django_blog_tutorial/media;
+  }
+
+  location / {
+    proxy_set_header Host $host;
+    proxy_pass http://127.0.0.1:8080;
+  }
+}
+</code></pre>
+<ul>
+<li>运行server</li>
+</ul>
+<pre><code># 软连接
+sudo ln -sf /etc/nginx/sites-available/bode.vip /etc/nginx/sites-enabled
+
+cd /home/sites/
+
+# nginx配置文件地址
+# sudo vim /etc/nginx/sites-available/hello_uni.vip
+
+cd /etc/nginx/sites-available
+sudo vi hello_uni.vip
+
+# gunicorn
+# pip3 install gunicorn
+cd /home/sites/uniapps/hello_uni/
+# source env/bin/activate
+sudo service nginx reload
+
+
+gunicorn --bind 127.0.0.1:8000 uni_test.wsgi:application
+gunicorn -w 3 -b 127.0.0.1:8080 my_blog.wsgi:application
+</code></pre>
+<h2 id="_7"></h2>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
