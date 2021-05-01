@@ -13,3 +13,5 @@ git commit -m "$commit_name"
 git push -u origin master
 
 echo "\n提交说明为: $commit_name\n"
+
+pause
