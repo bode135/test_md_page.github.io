@@ -2,11 +2,15 @@
 
 > Markdown生成wiki文档风格的静态网站, 一般用于教程或者API文档.
 
+---
+
 ## 效果图
 
 ![image-20210501210147517](http://tuchuang-bode135.oss-cn-beijing.aliyuncs.com/img/image-20210501210147517.png)
 
 
+
+---
 
 ## 安装mkdocs
 
@@ -20,6 +24,8 @@
 ```
 pip install mkdocs
 ```
+
+---
 
 ## 自定义风格
 
