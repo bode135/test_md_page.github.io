@@ -40,16 +40,27 @@ u {
 
 
 /* 隐藏脚注 */
-footer{
-	visibility: hidden;
-}
+/* footer{
+		visibility: hidden;
+} */
 
 /* 显示换页按钮*/
-.rst-footer-buttons
+/* .rst-footer-buttons
 { 
-visibility:visible;
+	visibility:visible;
+} */
+
+
+.md-footer-meta{
+	visibility:hidden;
 }
 
-body{
-  /* font-family:cursive; */
+.md-footer-copyright:after{
+	visibility:visible;
+	position: absolute;
+	left: 50px;
+	/* margin-right: 10; */
+	/* text-align: right; */
+	/* float:right ; */
+	content: 'made by bode';
 }
