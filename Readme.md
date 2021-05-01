@@ -4,7 +4,7 @@
 
 ## Ð§¹ûÍ¼
 
-![image-20210501210147517](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210501210147517.png)
+![image-20210501210147517](http://tuchuang-bode135.oss-cn-beijing.aliyuncs.com/img/image-20210501210147517.png)
 
 
 
